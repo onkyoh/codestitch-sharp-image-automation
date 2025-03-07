@@ -1,0 +1,28 @@
+{
+	"name": "codestitch-sharp-image-automation",
+	"version": "0.1.0",
+	"description": "Automatically renders, measures, and creates a sharp image code snippet for each each picture in your CodeStitch project.",
+	"main": "lib/index.js",
+	"bin": {
+		"run-sharp-automation": "./bin/index.js"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [
+		"11ty",
+		"eleventy",
+		"image",
+		"optimization",
+		"codestitch",
+		"sharp"
+	],
+	"author": "Adnan Radwan",
+	"dependencies": {
+		"js-yaml": "^4.1.0",
+		"playwright-chromium": "^1.42.1"
+	},
+	"engines": {
+		"node": ">=14.0.0"
+	}
+}
