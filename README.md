@@ -73,16 +73,20 @@ npx run-sharp-automation --target services/tile-installation
 The tool performs the following steps:
 
 1. **Scanning**: Recursively scans your content directory for HTML files and extracts permalinks from frontmatter
-    - When using `--target`, only processes the specified page
+   - When using `--target`, only processes the specified page
 2. **Measurement**: Uses Playwright to render each page at different viewport sizes:
     - Mobile (320×800px)
     - Tablet (1024×800px)
     - Desktop (1920×1080px)
 3. **Analysis**: Measures the rendered dimensions of each image at each breakpoint
+   - Detects which images are above-the-fold in the mobile viewport
+   - Sets minimum dimensions of 1×1px for hidden or zero-sized elements
 4. **Optimization**: Generates picture elements with:
     - Properly sized images for each breakpoint
     - Appropriate `srcset` attributes for modern formats (avif, webp, jpeg)
-    - All original attributes (class, alt, loading, etc.) preserved
+    - Preload links for above-the-fold images to improve page load performance
+    - No `loading="lazy"` attribute for above-the-fold images (added to below-fold images)
+    - All other original attributes (class, alt, etc.) preserved
 5. **Output**: Saves the generated markup to files in the output directory, organized by page
     - Each file is named based on the page's permalink (e.g., `about.html`, `blog-post-1.html`)
     - This naming convention ensures unique filenames for each page, even with nested routes
