@@ -23,6 +23,7 @@ A tool that renders your [CodeStitch](https://codestitch.app/app) website and au
 3. Generates optimized picture markup with responsive srcsets for avif, webp, and jpeg formats
 4. Preserves image classes, alt text, and other attributes
 5. Works seamlessly with 11ty/Nunjucks templates and CodeStitch Sharp Images plugin
+6. Allows targeting specific pages for optimization
 
 ## Usage
 
@@ -46,7 +47,25 @@ npx run-sharp-automation [options]
 Options:
   --base-url URL       Development server URL (default: http://localhost:8080)
   --output-dir DIR     Output directory for optimized markup (default: ./image-optimizations)
+  --content-dir DIR    Directory containing HTML/Nunjucks content files (default: ./src/content)
+  --target PAGE        Specific page to optimize (e.g., home, about, services/service-name)
   --help, -h           Show this help message
+```
+
+### Examples
+
+```bash
+# Optimize all pages
+npx run-sharp-automation
+
+# Optimize only the home page (index.html)
+npx run-sharp-automation --target home
+
+# Optimization only targets /src/content/pages/about
+npx run-sharp-automation --target about
+
+# Optimization only targets /src/content/pages/services/tile-installation.html
+npx run-sharp-automation --target services/tile-installation
 ```
 
 ## How It Works
@@ -54,8 +73,9 @@ Options:
 The tool performs the following steps:
 
 1. **Scanning**: Recursively scans your content directory for HTML files and extracts permalinks from frontmatter
+    - When using `--target`, only processes the specified page
 2. **Measurement**: Uses Playwright to render each page at different viewport sizes:
-    - Mobile (320×675px)
+    - Mobile (320×800px)
     - Tablet (1024×800px)
     - Desktop (1920×1080px)
 3. **Analysis**: Measures the rendered dimensions of each image at each breakpoint

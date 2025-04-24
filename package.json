@@ -1,13 +1,14 @@
 {
 	"name": "codestitch-sharp-image-automation",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Automatically renders, measures, and creates a sharp image code snippet for each each picture in your CodeStitch project.",
 	"main": "lib/index.js",
 	"bin": {
 		"run-sharp-automation": "./bin/index.js"
 	},
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "node ./bin/index.js",
+		"test:home": "node ./bin/index.js --target Home"
 	},
 	"repository": {
 		"type": "git",
