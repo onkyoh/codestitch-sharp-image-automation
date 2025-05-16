@@ -35,7 +35,7 @@ CodeStitch Image Optimizer
 Automatically optimize images for the CodeStitch Sharp Images plugin.
 
 Usage:
-  codestitch-optimize [options]
+  run-sharp-automation [options]
 
 Options:
   --base-url URL         Development server URL (default: http://localhost:8080)
@@ -45,10 +45,10 @@ Options:
   --help, -h             Show this help message
 
 Examples:
-  codestitch-optimize                         # Optimize all pages
-  codestitch-optimize --target home           # Optimize only the home page (index.html)
-  codestitch-optimize --target about          # Optimize only the about page
-  codestitch-optimize --target services/tile-installation   # Optimize only the tile-installation page
+  run-sharp-automation                         # Optimize all pages
+  run-sharp-automation --target home           # Optimize only the home page (index.html)
+  run-sharp-automation --target about          # Optimize only the about page
+  run-sharp-automation --target services/tile-installation   # Optimize only the tile-installation page
     `);
 		process.exit(0);
 	}

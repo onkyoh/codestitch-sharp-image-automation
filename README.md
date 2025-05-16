@@ -2,25 +2,13 @@
 
 A tool that renders your [CodeStitch](https://codestitch.app/app) website and automatically takes responsive measurements of your images to creates [sharp image](https://www.npmjs.com/package/@codestitchofficial/eleventy-plugin-sharp-images) compatible code snippets.
 
-## Table of Contents
-
--   [Features](#features)
--   [Installation](#installation)
--   [Configuration](#configuration)
--   [Usage](#usage)
-    -   [Command Options](#command-options)
-    -   [Examples](#examples)
--   [How It Works](#how-it-works)
--   [Optimization Strategy](#optimization-strategy)
--   [Special Thanks](#special-thanks)
-
 <a href="#features"></a>
 
 ## Features
 
 1. Scans your website pages and analyzes all picture elements at different viewport sizes
 2. Automatically determines optimal image dimensions for mobile, tablet, and desktop breakpoints
-3. Generates optimized picture markup with responsive srcsets for avif, webp, and jpeg formats
+3. Generates optimized picture markup with responsive srcsets for avif, webp, png, and jpeg formats
 4. Preserves image classes, alt text, and other attributes
 5. Works seamlessly with 11ty/Nunjucks templates and CodeStitch Sharp Images plugin
 6. Allows targeting specific pages for optimization
@@ -61,7 +49,7 @@ npx run-sharp-automation
 # Optimize only the home page (index.html)
 npx run-sharp-automation --target home
 
-# Optimization only targets /src/content/pages/about
+# Optimization only targets /src/content/pages/about.html
 npx run-sharp-automation --target about
 
 # Optimization only targets /src/content/pages/services/tile-installation.html
@@ -73,14 +61,15 @@ npx run-sharp-automation --target services/tile-installation
 The tool performs the following steps:
 
 1. **Scanning**: Recursively scans your content directory for HTML files and extracts permalinks from frontmatter
-   - When using `--target`, only processes the specified page
+    - When using `--target`, only processes the specified page
 2. **Measurement**: Uses Playwright to render each page at different viewport sizes:
-    - Mobile (320×800px)
+    - Mobile (320×700px)
     - Tablet (1024×800px)
     - Desktop (1920×1080px)
 3. **Analysis**: Measures the rendered dimensions of each image at each breakpoint
-   - Detects which images are above-the-fold in the mobile viewport
-   - Sets minimum dimensions of 1×1px for hidden or zero-sized elements
+    - Detects which images are above-the-fold in the mobile viewport
+    - Sets minimum dimensions of 1×1px for hidden or zero-sized elements
+    - For some stitches Parallax is achieved by rendering images with CSS, in this scenario the plugin generates 2 Desktop measurements, 1024-1600px and 1600px+. The latter is given 1x1px for its dimensions.
 4. **Optimization**: Generates picture elements with:
     - Properly sized images for each breakpoint
     - Appropriate `srcset` attributes for modern formats (avif, webp, jpeg)
