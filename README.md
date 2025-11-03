@@ -37,6 +37,7 @@ Options:
   --output-dir DIR     Output directory for optimized markup (default: ./image-optimizations)
   --content-dir DIR    Directory containing HTML/Nunjucks content files (default: ./src/content)
   --target PAGE        Specific page to optimize (e.g., home, about, services/service-name)
+  --skinny FORMAT      Generate slim markup with only one optimized format (avif or webp)
   --help, -h           Show this help message
 ```
 
@@ -46,6 +47,12 @@ Options:
 # Optimize all pages
 npx run-sharp-automation
 
+# Optimize with only AVIF format (67% smaller markup)
+npx run-sharp-automation --skinny avif
+
+# Optimize with only WebP format
+npx run-sharp-automation --skinny webp
+
 # Optimize only the home page (index.html)
 npx run-sharp-automation --target home
 
@@ -54,6 +61,9 @@ npx run-sharp-automation --target about
 
 # Optimization only targets /src/content/pages/services/tile-installation.html
 npx run-sharp-automation --target services/tile-installation
+
+# Combine flags
+npx run-sharp-automation --target home --skinny avif
 ```
 
 ## How It Works
@@ -73,6 +83,7 @@ The tool performs the following steps:
 4. **Optimization**: Generates picture elements with:
     - Properly sized images for each breakpoint
     - Appropriate `srcset` attributes for modern formats (avif, webp, jpeg)
+    - **Skinny mode** (`--skinny`): Generates only one optimized format per breakpoint instead of three, reducing markup by 67%
     - Preload links for above-the-fold images to improve page load performance
     - No `loading="lazy"` attribute for above-the-fold images (added to below-fold images)
     - All other original attributes (class, alt, etc.) preserved

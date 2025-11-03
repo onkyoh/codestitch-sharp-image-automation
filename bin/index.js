@@ -12,6 +12,8 @@ const options = {
 	autoStartServer: true,
 	forceRun: false,
 	targetPage: null,
+	skinny: false,
+	skinnyFormat: null,
 };
 
 // Parse command line arguments
@@ -28,6 +30,16 @@ for (let i = 0; i < args.length; i++) {
 	} else if (args[i] === "--target" && i + 1 < args.length) {
 		options.targetPage = args[i + 1];
 		i++;
+	} else if (args[i] === "--skinny" && i + 1 < args.length) {
+		const format = args[i + 1].toLowerCase();
+		if (format === "avif" || format === "webp") {
+			options.skinny = true;
+			options.skinnyFormat = format;
+			i++;
+		} else {
+			console.error(`Error: --skinny format must be either "avif" or "webp", got "${args[i + 1]}"`);
+			process.exit(1);
+		}
 	} else if (args[i] === "--help" || args[i] === "-h") {
 		console.log(`
 CodeStitch Image Optimizer
@@ -42,13 +54,17 @@ Options:
   --output-dir DIR       Output directory for optimized markup (default: ./image-optimizations)
   --content-dir DIR      Directory containing HTML/Nunjucks content files (default: ./src/content)
   --target PAGE          Specific page to optimize (e.g., home, about, services/tile-installation)
+  --skinny FORMAT        Generate slim markup with only one optimized format (avif or webp)
   --help, -h             Show this help message
 
 Examples:
-  run-sharp-automation                         # Optimize all pages
+  run-sharp-automation                         # Optimize all pages with full format support
+  run-sharp-automation --skinny avif           # Optimize all pages with only AVIF format
+  run-sharp-automation --skinny webp           # Optimize all pages with only WebP format
   run-sharp-automation --target home           # Optimize only the home page (index.html)
   run-sharp-automation --target about          # Optimize only the about page
   run-sharp-automation --target services/tile-installation   # Optimize only the tile-installation page
+  run-sharp-automation --target home --skinny avif           # Optimize home page with only AVIF format
     `);
 		process.exit(0);
 	}
