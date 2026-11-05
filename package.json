@@ -4,7 +4,7 @@
 	"description": "Automatically renders, measures, and creates a sharp image code snippet for each each picture in your CodeStitch project.",
 	"main": "lib/index.js",
 	"bin": {
-		"run-sharp-automation": "./bin/index.js"
+		"run-sharp-automation": "bin/index.js"
 	},
 	"scripts": {
 		"test": "jest",
@@ -37,5 +37,9 @@
 	},
 	"engines": {
 		"node": ">=20.0.0"
-	}
+	},
+	"files": [
+		"bin",
+		"lib"
+	]
 }
